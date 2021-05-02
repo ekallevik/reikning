@@ -1,5 +1,18 @@
 import moment from "moment";
 
+export type User = {
+  displayName: string;
+  email: string;
+  photoURL: string;
+  uid: string;
+};
+
+export type FirebaseUserState = {
+  user: User;
+  loading: boolean;
+  error: any;
+};
+
 export type IncomeCategory = "Salary" | "Financial gain" | "Gift" | "Other";
 
 export type Income = {
@@ -8,6 +21,28 @@ export type Income = {
   date: any;
   source: string;
   category: IncomeCategory;
+};
+
+export const incomeConverter = {
+  toFirestore: ({ amount, category, date, description, source }: Income) => {
+    return {
+      amount: amount,
+      description: description,
+      date: date.toString(),
+      source: source,
+      category: category,
+    };
+  },
+  fromFirestore: (snapshot, options): Income => {
+    const data = snapshot.data(options);
+    return {
+      amount: data.amount,
+      description: data.description,
+      date: Date.parse(data.date),
+      source: data.source,
+      category: data.category,
+    };
+  },
 };
 
 export const DEFAULT_INCOME: Income = {

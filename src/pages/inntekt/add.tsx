@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import {
   EuiButton,
@@ -12,8 +12,16 @@ import {
 } from "@elastic/eui";
 
 import { htmlIdGenerator } from "@elastic/eui/lib/services";
-import { DEFAULT_INCOME, IncomeCategory } from "../../lib/domain";
+import {
+  DEFAULT_INCOME,
+  Income,
+  IncomeCategory,
+  incomeConverter,
+  User,
+} from "../../lib/domain";
 import Head from "next/head";
+import { UserContext } from "../../lib/context";
+import { firestore } from "../../lib/firebase";
 
 type RadioCategory = {
   id: string;
@@ -21,7 +29,24 @@ type RadioCategory = {
   label: string;
 };
 
+const addIncomeToFirebase = (user: User, income: Income) => {
+  firestore
+    .collection("users")
+    .doc(user.uid)
+    .collection("income")
+    .withConverter(incomeConverter)
+    .add(income)
+    .then(docRef => {
+      console.log("Document written with ID: ", docRef.id);
+    })
+    .catch(error => {
+      console.error("Error adding document: ", error);
+    });
+};
+
 const AddIncomePage = () => {
+  const { user, loading, error } = useContext(UserContext);
+
   const [income, setIncome] = useState(DEFAULT_INCOME);
   const idPrefix = useRef(htmlIdGenerator()());
 
@@ -60,6 +85,7 @@ const AddIncomePage = () => {
 
   const handleSubmit = () => {
     console.log("Submitting...");
+    addIncomeToFirebase(user, income);
     setIncome(DEFAULT_INCOME);
     console.log("Submitted");
   };

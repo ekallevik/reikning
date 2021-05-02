@@ -1,33 +1,35 @@
-/*
-import React from 'react';
+import React from "react";
 
 import { EuiBasicTable, EuiHealth, EuiLink } from "@elastic/eui";
 
-/!*
-Example user object:
+const IncomePage = () => {
+  const users = [
+    {
+      id: "1",
+      firstName: "john",
+      lastName: "doe",
+      github: "johndoe",
+      dateOfBirth: Date.now(),
+      nationality: "NL",
+      online: true,
+    },
+    {
+      id: "2",
+      firstName: "johnnn",
+      lastName: "does",
+      github: "johndoed",
+      dateOfBirth: Date.now(),
+      nationality: "NL",
+      online: true,
+    },
+  ];
 
-{
-  id: '1',
-  firstName: 'john',
-  lastName: 'doe',
-  github: 'johndoe',
-  dateOfBirth: Date.now(),
-  nationality: 'NL',
-  online: true
-}
+  const countryNL = {
+    code: "NL",
+    name: "Netherlands",
+    flag: "🇳🇱",
+  };
 
-Example country object:
-
-{
-  code: 'NL',
-  name: 'Netherlands',
-  flag: '🇳🇱'
-}
-*!/
-
-const store = createDataStore();
-
-export const Table = () => {
   const columns = [
     {
       field: "firstName",
@@ -35,7 +37,7 @@ export const Table = () => {
       sortable: true,
       "data-test-subj": "firstNameCell",
       mobileOptions: {
-        render: (item) => (
+        render: item => (
           <span>
             {item.firstName}{" "}
             <EuiLink href="#" target="_blank">
@@ -46,61 +48,60 @@ export const Table = () => {
         header: false,
         truncateText: false,
         enlarge: true,
-        fullWidth: true
-      }
+        fullWidth: true,
+      },
     },
     {
       field: "lastName",
       name: "Last Name",
       truncateText: true,
-      render: (name) => (
+      render: name => (
         <EuiLink href="#" target="_blank">
           {name}
         </EuiLink>
       ),
       mobileOptions: {
-        show: false
-      }
+        show: false,
+      },
     },
     {
       field: "github",
-      name: "Github"
+      name: "Github",
     },
     {
       field: "dateOfBirth",
       name: "Date of Birth",
       dataType: "date",
-      render: (date) => formatDate(date, "dobLong")
+      render: date => date,
     },
     {
       field: "nationality",
       name: "Nationality",
-      render: (countryCode) => {
-        const country = store.getCountry(countryCode);
+      render: countryCode => {
+        const country = countryNL;
         return `${country.flag} ${country.name}`;
-      }
+      },
     },
     {
       field: "online",
       name: "Online",
       dataType: "boolean",
-      render: (online) => {
+      render: online => {
         const color = online ? "success" : "danger";
         const label = online ? "Online" : "Offline";
         return <EuiHealth color={color}>{label}</EuiHealth>;
-      }
-    }
+      },
+    },
   ];
 
-  const items = store.users.filter((user, index) => index < 10);
+  const items = users.filter((user, index) => index < 10);
 
-  const getRowProps = (item) => {
+  const getRowProps = item => {
     const { id } = item;
     return {
       "data-test-subj": `row-${id}`,
       className: "customRowClass",
-      onClick: () => {
-      }
+      onClick: () => {},
     };
   };
 
@@ -110,18 +111,22 @@ export const Table = () => {
     return {
       className: "customCellClass",
       "data-test-subj": `cell-${id}-${field}`,
-      textOnly: true
+      textOnly: true,
     };
   };
 
   return (
-    <EuiBasicTable
-      items={items}
-      rowHeader="firstName"
-      columns={columns}
-      rowProps={getRowProps}
-      cellProps={getCellProps}
-    />
+    <>
+      <h1>Heisann</h1>
+      <EuiBasicTable
+        items={items}
+        rowHeader="firstName"
+        columns={columns}
+        rowProps={getRowProps}
+        cellProps={getCellProps}
+      />
+    </>
   );
 };
-*/
+
+export default IncomePage;

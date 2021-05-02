@@ -11,8 +11,6 @@ import {
   EuiTitle,
 } from "@elastic/eui";
 
-import MyComponent from "../components/my_component";
-
 const Index: FunctionComponent = () => (
   <>
     <EuiFlexGroup>
@@ -137,8 +135,6 @@ const Index: FunctionComponent = () => (
         <EuiCode>yarn build-docs</EuiCode>, commit the results and push to
         GitHub.
       </p>
-
-      <MyComponent />
     </EuiText>
   </>
 );

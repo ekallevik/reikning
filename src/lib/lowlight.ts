@@ -7,9 +7,9 @@
  */
 
 // @ts-ignore
-const low = require('lowlight/lib/core');
+const low = require("lowlight/lib/core");
 
 // Add whatever languages you need here. See also `./highlight.ts`
-low.registerLanguage('json', require('highlight.js/lib/languages/json'));
+low.registerLanguage("json", require("highlight.js/lib/languages/json"));
 
 module.exports = low;

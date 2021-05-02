@@ -1,17 +1,14 @@
 import React, { FunctionComponent } from "react";
 import {
-  EuiAvatar,
   EuiButton,
   EuiCode,
   EuiFlexGroup,
   EuiFlexItem,
   EuiLink,
-  EuiLoadingChart,
-  EuiLoadingContent,
   EuiSpacer,
   EuiStat,
   EuiText,
-  EuiTitle
+  EuiTitle,
 } from "@elastic/eui";
 
 import MyComponent from "../components/my_component";
@@ -19,10 +16,9 @@ import MyComponent from "../components/my_component";
 const Index: FunctionComponent = () => (
   <>
     <EuiFlexGroup>
-      <EuiAvatar name="Avatar" imageUrl="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/man5-512.png" />
       <EuiFlexItem>
         <EuiTitle size="l">
-          <h1>Elastic&apos;s Next.js EUI Starter</h1>
+          <h1>Reikning</h1>
         </EuiTitle>
       </EuiFlexItem>
 
@@ -40,18 +36,24 @@ const Index: FunctionComponent = () => (
 
     <EuiText>
       <h2>Getting started</h2>
-      <EuiLoadingChart size="xl" />
-      <EuiLoadingContent lines={3} />
       <div>
         <EuiFlexGroup>
           <EuiFlexItem>
             <EuiStat title="1" description="Default color" />
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiStat title="10" description="Subdued color" titleColor="subdued" />
+            <EuiStat
+              title="10"
+              description="Subdued color"
+              titleColor="subdued"
+            />
           </EuiFlexItem>
           <EuiFlexItem>
-            <EuiStat title="100" description="Primary color" titleColor="primary" />
+            <EuiStat
+              title="100"
+              description="Primary color"
+              titleColor="primary"
+            />
           </EuiFlexItem>
           <EuiFlexItem>
             <EuiStat

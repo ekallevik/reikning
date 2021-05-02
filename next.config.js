@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires,@typescript-eslint/no-use-before-define,@typescript-eslint/no-empty-function,prefer-template */
-const crypto = require('crypto');
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const iniparser = require('iniparser');
+const crypto = require("crypto");
+const fs = require("fs");
+const glob = require("glob");
+const path = require("path");
+const iniparser = require("iniparser");
 
-const withBundleAnalyzer = require('@next/bundle-analyzer');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { IgnorePlugin, NormalModuleReplacementPlugin } = require('webpack');
+const withBundleAnalyzer = require("@next/bundle-analyzer");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { IgnorePlugin, NormalModuleReplacementPlugin } = require("webpack");
 
 /**
  * If you are deploying your site under a directory other than `/` e.g.
@@ -15,9 +15,9 @@ const { IgnorePlugin, NormalModuleReplacementPlugin } = require('webpack');
  * We don't need this during local development, because everything is
  * available under `/`.
  */
-const usePathPrefix = process.env.PATH_PREFIX === 'true';
+const usePathPrefix = process.env.PATH_PREFIX === "true";
 
-const pathPrefix = usePathPrefix ? derivePathPrefix() : '';
+const pathPrefix = usePathPrefix ? derivePathPrefix() : "";
 
 const themeConfig = buildThemeConfig();
 
@@ -61,14 +61,14 @@ const nextConfig = {
     // features are either ignored or replaced with stub implementations.
     if (isServer) {
       config.externals = config.externals.map(eachExternal => {
-        if (typeof eachExternal !== 'function') {
+        if (typeof eachExternal !== "function") {
           return eachExternal;
         }
 
         return (context, request, callback) => {
           if (
-            request.indexOf('@elastic/eui') > -1 ||
-            request.indexOf('react-ace') > -1
+            request.indexOf("@elastic/eui") > -1 ||
+            request.indexOf("react-ace") > -1
           ) {
             return callback();
           }
@@ -81,12 +81,12 @@ const nextConfig = {
       // https://webpack.js.org/loaders/null-loader/
       config.module.rules.push({
         test: /react-ace/,
-        use: 'null-loader',
+        use: "null-loader",
       });
 
       // Mock HTMLElement on the server-side
       const definePluginId = config.plugins.findIndex(
-        p => p.constructor.name === 'DefinePlugin'
+        p => p.constructor.name === "DefinePlugin"
       );
 
       config.plugins[definePluginId].definitions = {
@@ -117,7 +117,7 @@ const nextConfig = {
       new IgnorePlugin(/^\.\/locale$/, /moment$/)
     );
 
-    config.resolve.mainFields = ['module', 'main'];
+    config.resolve.mainFields = ["module", "main"];
 
     return config;
   },
@@ -139,26 +139,26 @@ const nextConfig = {
    */
   exportPathMap: async function (defaultPathMap) {
     const dynamicPaths = [
-      '/my-dashboard',
-      '/workpad',
-      '/my-logs',
-      '/my-workpad',
-      '/my-logs',
-      '/apm',
-      '/metrics',
-      '/logs',
-      '/uptime',
-      '/maps',
-      '/siem',
-      '/canvas',
-      '/discover',
-      '/visualize',
-      '/dashboard',
-      '/machine-learning',
-      '/custom-plugin',
-      '/dev-tools',
-      '/stack-monitoring',
-      '/stack-management',
+      "/my-dashboard",
+      "/workpad",
+      "/my-logs",
+      "/my-workpad",
+      "/my-logs",
+      "/apm",
+      "/metrics",
+      "/logs",
+      "/uptime",
+      "/maps",
+      "/siem",
+      "/canvas",
+      "/discover",
+      "/visualize",
+      "/dashboard",
+      "/machine-learning",
+      "/custom-plugin",
+      "/dev-tools",
+      "/stack-monitoring",
+      "/stack-management",
     ];
 
     const pathMap = {
@@ -166,7 +166,7 @@ const nextConfig = {
     };
 
     for (const path of dynamicPaths) {
-      pathMap[`/my-app${path}`] = { page: '/my-app/[slug]' };
+      pathMap[`/my-app${path}`] = { page: "/my-app/[slug]" };
     }
 
     return pathMap;
@@ -180,7 +180,7 @@ const nextConfig = {
  * - Load SCSS files from JavaScript.
  */
 module.exports = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === 'true',
+  enabled: process.env.ANALYZE === "true",
 })(nextConfig);
 
 /**
@@ -200,11 +200,11 @@ function buildThemeConfig() {
   const themeFiles = glob.sync(
     path.join(
       __dirname,
-      'node_modules',
-      '@elastic',
-      'eui',
-      'dist',
-      'eui_theme_*.min.css'
+      "node_modules",
+      "@elastic",
+      "eui",
+      "dist",
+      "eui_theme_*.min.css"
     )
   );
 
@@ -214,12 +214,12 @@ function buildThemeConfig() {
   };
 
   for (const each of themeFiles) {
-    const basename = path.basename(each, '.min.css');
+    const basename = path.basename(each, ".min.css");
 
-    const themeId = basename.replace(/^eui_theme_/, '');
+    const themeId = basename.replace(/^eui_theme_/, "");
 
     const themeName =
-      themeId[0].toUpperCase() + themeId.slice(1).replace(/_/g, ' ');
+      themeId[0].toUpperCase() + themeId.slice(1).replace(/_/g, " ");
 
     const publicPath = `themes/${basename}.${hashFile(each)}.min.css`;
     const toPath = path.join(
@@ -276,7 +276,7 @@ function hashFile(filePath) {
  * repository name is what will be used to serve the site.
  */
 function derivePathPrefix() {
-  const gitConfigPath = path.join(__dirname, '.git', 'config');
+  const gitConfigPath = path.join(__dirname, ".git", "config");
 
   if (fs.existsSync(gitConfigPath)) {
     const gitConfig = iniparser.parseSync(gitConfigPath);
@@ -285,17 +285,17 @@ function derivePathPrefix() {
       const originUrl = gitConfig['remote "origin"'].url;
 
       // eslint-disable-next-line prettier/prettier
-      return '/' + originUrl.split('/').pop().replace(/\.git$/, '');
+      return "/" + originUrl.split("/").pop().replace(/\.git$/, "");
     }
   }
 
-  const packageJsonPath = path.join(__dirname, 'package.json');
+  const packageJsonPath = path.join(__dirname, "package.json");
 
   if (fs.existsSync(packageJsonPath)) {
     const { name: packageName } = require(packageJsonPath);
     // Strip out any username / namespace part. This works even if there is
     // no username in the package name.
-    return '/' + packageName.split('/').pop();
+    return "/" + packageName.split("/").pop();
   }
 
   throw new Error(

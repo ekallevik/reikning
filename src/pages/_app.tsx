@@ -1,13 +1,11 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import React, { FunctionComponent } from "react";
-import { EuiErrorBoundary } from "@elastic/eui";
 
-import "./app.scss";
-
-import Chrome from "../components/chrome";
+import "../../styles/globals.css";
 import useUserData from "../lib/hooks";
 import { UserContext } from "../lib/context";
+import Navbar from "../components/Navbar";
 
 /**
  * Next.js uses the App component to initialize pages. You can override it
@@ -21,14 +19,12 @@ const EuiApp: FunctionComponent<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <UserContext.Provider value={user}>
+      <Navbar />
       <Head>
         <title> Reikning </title>
       </Head>
-      <Chrome>
-        <EuiErrorBoundary>
-          <Component {...pageProps} />
-        </EuiErrorBoundary>
-      </Chrome>
+
+      <Component {...pageProps} />
     </UserContext.Provider>
   );
 };

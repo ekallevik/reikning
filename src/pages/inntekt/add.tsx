@@ -44,7 +44,7 @@ const addIncomeToFirebase = (user: User, income: Income) => {
     });
 };
 
-const AddIncomePage = () => {
+const AddIncomePage = (): JSX.Element => {
   const { user, loading, error } = useContext(UserContext);
 
   const [income, setIncome] = useState(DEFAULT_INCOME);

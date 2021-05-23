@@ -5,7 +5,7 @@
  */
 
 const selector = 'link[data-name="eui-theme"]';
-export const defaultTheme = 'light';
+export const defaultTheme = "light";
 
 function getAllThemes(): HTMLLinkElement[] {
   // @ts-ignore
@@ -14,7 +14,7 @@ function getAllThemes(): HTMLLinkElement[] {
 
 export function setTheme(newThemeName: string): void {
   const oldThemeName = getTheme();
-  localStorage.setItem('theme', newThemeName);
+  localStorage.setItem("theme", newThemeName);
 
   for (const themeLink of getAllThemes()) {
     // Disable all theme links, except for the desired theme, which we enable
@@ -34,13 +34,13 @@ export function setTheme(newThemeName: string): void {
 }
 
 export function getTheme(): string {
-  const storedTheme = localStorage.getItem('theme');
+  const storedTheme = localStorage.getItem("theme");
 
   return storedTheme || defaultTheme;
 }
 
 export function setInitialTheme(): string {
-  if (typeof window !== 'object') {
+  if (typeof window !== "object") {
     return defaultTheme;
   }
 

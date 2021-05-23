@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import Error, { ErrorProps } from 'next/error';
+import React, { FunctionComponent } from "react";
+import Error, { ErrorProps } from "next/error";
 
 /**
  * An example of how to render a custom error page. Note that we have a

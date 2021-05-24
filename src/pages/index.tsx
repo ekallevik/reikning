@@ -10,6 +10,7 @@ import {
 } from "@elastic/eui";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const Index: FunctionComponent = (): JSX.Element => (
   <div>
@@ -43,8 +44,7 @@ const Index: FunctionComponent = (): JSX.Element => (
     <EuiHorizontalRule size="half" />
     <EuiFlexGroup justifyContent="center">
       <EuiButton color="primary" fill>
-        {" "}
-        Se formue{" "}
+        <Link href="/formue">Se formue</Link>
       </EuiButton>
       <EuiButton color="secondary" fill>
         {" "}

@@ -1,18 +1,11 @@
-import { BankAsset } from "../pages/eiendeler";
-import {
-  EuiFlexGrid,
-  EuiFlexGroup,
-  EuiFlexItem,
-  EuiHorizontalRule,
-  EuiSpacer,
-  EuiTitle,
-} from "@elastic/eui";
+import { EuiFlexGrid, EuiFlexGroup, EuiFlexItem, EuiHorizontalRule, EuiSpacer, EuiTitle } from "@elastic/eui";
 import AssetCard from "./AssetCard";
 import React from "react";
+import { Asset } from "../lib/domain";
 
 type AssetGridProps = {
   title?: string;
-  assets: BankAsset[];
+  assets: Asset[];
 };
 
 const AssetGrid = ({ title, assets }: AssetGridProps): JSX.Element => {
@@ -35,9 +28,14 @@ const AssetGrid = ({ title, assets }: AssetGridProps): JSX.Element => {
 
       <EuiFlexGroup justifyContent="spaceAround">
         <EuiFlexGrid columns={3} gutterSize={"xl"}>
-          {assets.map(({ balance, bank, name }: BankAsset) => (
-            <EuiFlexItem key={`${bank} ${name}`}>
-              <AssetCard bank={bank} name={name} balance={balance} />
+          {assets.map(({ id, bank, name, transactions, type }: Asset) => (
+            <EuiFlexItem key={id}>
+              <AssetCard
+                id={id}
+                bank={bank}
+                name={name}
+                transactions={transactions}
+                type={type} />
             </EuiFlexItem>
           ))}
         </EuiFlexGrid>

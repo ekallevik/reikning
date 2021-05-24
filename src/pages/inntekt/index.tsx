@@ -2,7 +2,7 @@ import React from "react";
 
 import { EuiBasicTable, EuiHealth, EuiLink } from "@elastic/eui";
 
-const IncomePage = () => {
+const IncomePage = (): JSX.Element => {
   const users = [
     {
       id: "1",

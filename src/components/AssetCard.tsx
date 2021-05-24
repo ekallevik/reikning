@@ -1,9 +1,16 @@
 import React from "react";
 
 import { EuiIcon, EuiPanel, EuiStat } from "@elastic/eui";
-import { BankAsset } from "../pages/eiendeler";
+import { Asset } from "../lib/domain";
 
-const AssetCard = ({ balance, bank, name }: BankAsset): JSX.Element => {
+const AssetCard = ({
+  bank,
+  name,
+  transactions,
+}: Asset): JSX.Element => {
+
+  const balance = transactions.reduce((acc, item) => acc + item.amount, 0);
+
   return (
     <EuiPanel>
       <EuiStat

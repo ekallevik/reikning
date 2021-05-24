@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 
 export type User = {
   displayName: string;
@@ -7,42 +7,14 @@ export type User = {
   uid: string;
 };
 
-export type FirebaseUserState = {
-  user: User;
-  loading: boolean;
-  error: any;
-};
-
 export type IncomeCategory = "Salary" | "Financial gain" | "Gift" | "Other";
 
 export type Income = {
   amount: number;
   description: string;
-  date: any;
+  date: Moment;
   source: string;
   category: IncomeCategory;
-};
-
-export const incomeConverter = {
-  toFirestore: ({ amount, category, date, description, source }: Income) => {
-    return {
-      amount: amount,
-      description: description,
-      date: date.toString(),
-      source: source,
-      category: category,
-    };
-  },
-  fromFirestore: (snapshot, options): Income => {
-    const data = snapshot.data(options);
-    return {
-      amount: data.amount,
-      description: data.description,
-      date: Date.parse(data.date),
-      source: data.source,
-      category: data.category,
-    };
-  },
 };
 
 export const DEFAULT_INCOME: Income = {
@@ -53,66 +25,37 @@ export const DEFAULT_INCOME: Income = {
   category: "Salary",
 };
 
-type AssetType =
-  | "Bank Account"
-  | "Loan"
-  | "Stocks"
-  | "Savings Account"
-  | "Index fund"
-  | "Active fund"
-  | "Interest fund"
+type Scale = "Zero" | "Very low" | "Low" | "Medium" | "High" | "Very high";
+
+export type AssetType =
+  | "bank_account"
+  | "savings_account"
+  | "loan"
+  | "stocks"
+  | "index_fund"
+  | "active_fund"
+  | "interest_fund"
   | "BSU"
   | "IPS";
 
-type Scale = "Zero" | "Very low" | "Low" | "Medium" | "High" | "Very high";
-
-// todo: change to date?
-type Balance = {
-  amount: number;
+export type AssetTransaction = {
   date: string;
+  amount: number;
+  type: "opening" | "normal" | "financial_gain" | "interest" | "closing";
 };
 
 export type Asset = {
+  id: string;
   type: AssetType;
-  balance: Balance;
-  return: Scale;
-  risk: Scale;
-  comment: string;
-};
-
-const DEFAULT_ASSET = {
-  type: "Bank Account",
-  balance: {
-    amount: 0,
-    date: "",
-  },
-  return: "Very low",
-  risk: "Zero",
-  comment: "",
+  bank: string;
+  name: string;
+  transactions: AssetTransaction[];
 };
 
 type LiabilityType =
   | "Personal debt"
   | "Consumer loan"
   | "Credit card"
-  | "Car load"
-  | "Mortage"
+  | "Car loan"
+  | "Mortgage"
   | "Education debt";
-
-export type Liablity = {
-  type: LiabilityType;
-  balance: Balance;
-  interest: Scale;
-  risk: Scale;
-  comment: string;
-};
-
-const DEFAULT_LIABILITY = {
-  type: "Personal debt",
-  balance: {
-    amount: 0,
-    date: "",
-  },
-  interest: "zero",
-  risk: "Very low",
-};

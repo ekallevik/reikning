@@ -1,6 +1,5 @@
-import { auth } from "./firebase";
+import { auth, FirebaseUserState } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { FirebaseUserState } from "./domain";
 
 const useUserData = (): FirebaseUserState => {
   const [user, loading, error] = useAuthState(auth);

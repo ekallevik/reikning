@@ -12,16 +12,10 @@ import {
 } from "@elastic/eui";
 
 import { htmlIdGenerator } from "@elastic/eui/lib/services";
-import {
-  DEFAULT_INCOME,
-  Income,
-  IncomeCategory,
-  incomeConverter,
-  User,
-} from "../../lib/domain";
+import { DEFAULT_INCOME, Income, IncomeCategory, User } from "../../lib/domain";
 import Head from "next/head";
 import { UserContext } from "../../lib/context";
-import { firestore } from "../../lib/firebase";
+import { firestore, incomeConverter } from "../../lib/firebase";
 
 type RadioCategory = {
   id: string;
@@ -44,7 +38,7 @@ const addIncomeToFirebase = (user: User, income: Income) => {
     });
 };
 
-const AddIncomePage = () => {
+const AddIncomePage = (): JSX.Element => {
   const { user, loading, error } = useContext(UserContext);
 
   const [income, setIncome] = useState(DEFAULT_INCOME);
